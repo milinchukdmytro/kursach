@@ -23,7 +23,6 @@ app.post('/auth', (req,res) =>{
     let login = 'Dima'
     let password = '18'
     if (req.body.login == login && req.body.password == password){
-        //res.send('hello')
         res.render('note')
     }
     else {
@@ -35,5 +34,5 @@ app.post('/create', (req,res) =>{
     console.log(req.body.login);
     console.log(req.body.password);
     console.log(req.body.note);
-    res.send('Done')
+    res.render('note')
 })

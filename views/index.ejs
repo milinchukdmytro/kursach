@@ -8,11 +8,8 @@
         function saveToCookie() {
             var loginValue = document.getElementById("login").value;
             var passwordValue = document.getElementById("password").value;
-
-            // Зберегти дані в куки
             document.cookie = "login=" + loginValue + "; path=/";
             document.cookie = "password=" + passwordValue + "; path=/";
-            alert("Your login and password have been saved in cookies.");
         }
     </script>
 </head>

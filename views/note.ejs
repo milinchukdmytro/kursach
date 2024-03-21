@@ -11,28 +11,24 @@
             ));
             return matches ? decodeURIComponent(matches[1]) : undefined;
         }
-        const log = getCookie('login');
-        const pass = getCookie('password');
-
-        let note_text = document.getElementById('note').value
-
-        function send_req() {
-            let data = {login: log, password: pass, text: note_text};
-            fetch("/create", {
-                method: "POST",
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(data)
-            }).then(res => {
-                console.log("Request complete! response:", res);
-            });
+        function send(){
+            const log = getCookie('login');
+            const pass = getCookie('password');
+            let login_input = document.getElementById('login_input');
+            let pass_input = document.getElementById('pass_input');
+            login_input.value = log;
+            pass_input.value = pass;
         }
+
     </script>
 </head>
 <body>
 <div>
-    <form>
+    <form method="post" action="/create">
         <input type="text" placeholder="Your note" name="note" id="note">
-        <button type="submit" onclick="send_req()">Send</button>
+        <input type="text" id="login_input" name="login" display="none">
+        <input type="text" id="pass_input" name="password">
+        <button type="submit" onclick="send()">Send</button>
     </form>
 </div>
 </body>

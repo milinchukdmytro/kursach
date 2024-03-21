@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<!--    <link rel="stylesheet" type="text/css" href="style/index.css"/>-->
+    <script>
+        function getCookie(name) {
+            let matches = document.cookie.match(new RegExp(
+                "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+            ));
+            return matches ? decodeURIComponent(matches[1]) : undefined;
+        }
+        const log = getCookie('login');
+        const pass = getCookie('password');
+
+        let note_text = document.getElementById('note').value
+
+        function send_req() {
+            let data = {login: log, password: pass, text: note_text};
+            fetch("/create", {
+                method: "POST",
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            }).then(res => {
+                console.log("Request complete! response:", res);
+            });
+        }
+    </script>
+</head>
+<body>
+<div>
+    <form>
+        <input type="text" placeholder="Your note" name="note" id="note">
+        <button type="submit" onclick="send_req()">Send</button>
+    </form>
+</div>
+</body>
+</html>

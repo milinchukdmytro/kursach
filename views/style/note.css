@@ -1,21 +1,55 @@
 .input-none{
     display: none;
 }
-input{
-    height: 300px;
+#note {
+    position: relative;
     width: 500px;
-    position: absolute;
-    top: 50%;
-    left: 30%;
-    /*margin: -25px 0 0 -25px;*/
+    height: 100px;
+    margin: 50px auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
+
+#note::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    transform-origin: top left;
+    transform: scale(1);
+    transition: transform 0.3s ease-in-out;
+}
+
+#note:hover::before {
+    transform: scale(0);
+}
+
+#note textarea {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: none;
+}
+
+/*input{*/
+/*    height: 100px;*/
+/*    width: 500px;*/
+/*    position: relative;*/
+/*    top: 70%;*/
+/*    left: 30%;*/
+/*}*/
 #div-input{
     margin: 0 auto;
     align-items: center;
     position: relative;
     height: 50%;
 }
-#send-btn {
+.btn {
     background-color: rgba(51, 51, 51, 0.05);
     border-radius: 8px;
     border-width: 0;
@@ -36,4 +70,34 @@ input{
     -webkit-user-select: none;
     touch-action: manipulation;
     display: block;
+}
+
+.input-container {
+    position: relative;
+}
+
+.input-container input[type="text"] {
+    width: 30%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.input-container label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translateY(50%);
+    padding: 5px;
+    background-color: #fff;
+    transition: transform 0.3s ease-in-out, padding 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.input-container input[type="text"]:focus + label,
+.input-container input[type="text"]:not(:placeholder-shown) + label {
+    transform: translateY(-50%);
+    padding: 0 5px;
+    background-color: #fff;
+    font-size: 12px;
+    color: #888;
 }

@@ -29,14 +29,25 @@
         <input type="text" placeholder="Your note" name="note" id="note">
         </div>
         <div>
-            <button type="submit" onclick="send()" id="send-btn">Send</button>
+            <button type="submit" onclick="send()" class="btn">Add</button>
         </div>
         <input type="text" id="login_input" name="login" class="input-none">
         <input type="text" id="pass_input" name="password" class="input-none">
     </form>
-    <form method="get">
-        <button type="submit" id="show">Show</button>
+    <br>
+    <form method="get" action="/note">
+        <button type="submit" class="btn">Show</button>
     </form>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="input-container">
+        <% for(var i=0; i<arr.length; i++) {%>
+        <input type="text" class="input-data" value="<%=arr[i].text %>">
+        <%} %>
+    </div>
 </div>
 </body>
 </html>

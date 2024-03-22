@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-<!--    <link rel="stylesheet" type="text/css" href="style/index.css"/>-->
+    <link rel="stylesheet" type="text/css" href="style/note.css"/>
     <script>
         function getCookie(name) {
             let matches = document.cookie.match(new RegExp(
@@ -25,10 +25,17 @@
 <body>
 <div>
     <form method="post" action="/create">
+        <div id="div-input">
         <input type="text" placeholder="Your note" name="note" id="note">
-        <input type="text" id="login_input" name="login" display="none">
-        <input type="text" id="pass_input" name="password">
-        <button type="submit" onclick="send()">Send</button>
+        </div>
+        <div>
+            <button type="submit" onclick="send()" id="send-btn">Send</button>
+        </div>
+        <input type="text" id="login_input" name="login" class="input-none">
+        <input type="text" id="pass_input" name="password" class="input-none">
+    </form>
+    <form method="get">
+        <button type="submit" id="show">Show</button>
     </form>
 </div>
 </body>

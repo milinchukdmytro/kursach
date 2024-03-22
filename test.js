@@ -30,9 +30,15 @@ app.post('/auth', (req,res) =>{
     }
 })
 
+//curl -d "login="Dima"&password="18"&text="hello"" -X POST 127.0.0.1:8080/create
 app.post('/create', (req,res) =>{
-    console.log(req.body.login);
-    console.log(req.body.password);
-    console.log(req.body.note);
+    // console.log(req.body.login);
+    // console.log(req.body.password);
+    // console.log(req.body.note);
+    console.log(req.body)
     res.render('note')
+})
+
+app.get('/note', (req,res) =>{
+
 })

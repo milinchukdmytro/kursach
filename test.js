@@ -29,11 +29,11 @@ app.get('/', function (req, res) {
 
 // curl -d "login="Dima"&password="18"" -X POST 127.0.0.1:8080/auth
 app.post('/auth', (req,res) =>{
-    console.log(req.body)
+    //console.log(req.body)
     let login = 'Dima'
     let password = '18'
-    if (req.body.login == login && req.body.password == password){
-        res.render('note')
+    if ((req.body.login == login || 'Anya') && req.body.password == password){
+        get_data(req, res)
     }
     else {
         res.render('index')
@@ -42,15 +42,15 @@ app.post('/auth', (req,res) =>{
 
 //curl -d "login="Dima"&password="18"&text="hello"" -X POST 127.0.0.1:8080/create
 app.post('/create', (req,res) =>{
-    // console.log(req.body.login);
-    // console.log(req.body.password);
-    // console.log(req.body.note);
-    client.query('INSERT INTO public.demo (login, text) VALUES (req.body.login, req.body.note)', (err, q_res) =>{
+    console.log(req.body.login);
+    console.log(req.body.password);
+    console.log(req.body.note);
+    client.query('INSERT INTO public.demo (login, text) VALUES ($1, $2)',[req.body.login, req.body.note], (err, q_res) =>{
         if (err){
             console.log(err)
         }
     })
-    client.query("SELECT * FROM public.demo", (err,q_res)=>{
+    client.query("SELECT * FROM public.demo WHERE login = $1", [req.body.login], (err,q_res)=>{
         if (!err){
             let data = q_res.rows
             console.log(data)
@@ -66,17 +66,16 @@ app.post('/create', (req,res) =>{
             res.send('1')
         }
     })
-    console.log(req.body)
-    res.render('note')
+    //console.log(req.body)
 })
 
 app.get('/note', (req,res) =>{
-    client.query("SELECT * FROM public.test", (err,q_res)=>{
+    client.query("SELECT * FROM public.demo WHERE login = $1", [req.body.login], (err,q_res)=>{
         if (!err){
             let data = q_res.rows
-            console.log(data)
+            //console.log(data)
             for (let i=0; i<data.length; i++){
-                console.log(data[i].text)
+                //console.log(data[i].text)
             }
             res.render('note',{
                 arr: data
@@ -90,13 +89,13 @@ app.get('/note', (req,res) =>{
 })
 
 
-function get_data() {
-    client.query("SELECT * FROM public.demo", (err,q_res)=>{
+function get_data(req,res) {
+    client.query("SELECT * FROM public.demo WHERE login = $1", [req.body.login], (err,q_res)=>{
         if (!err){
             let data = q_res.rows
-            console.log(data)
+            //console.log(data)
             for (let i=0; i<data.length; i++){
-                console.log(data[i].text)
+                //console.log(data[i].text)
             }
             res.render('note',{
                 arr: data

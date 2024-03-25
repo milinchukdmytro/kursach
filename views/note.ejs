@@ -13,11 +13,21 @@
         }
         function send(){
             const log = getCookie('login');
-            const pass = getCookie('password');
             let login_input = document.getElementById('login_input');
-            let pass_input = document.getElementById('pass_input');
             login_input.value = log;
-            pass_input.value = pass;
+        }
+
+        function send_del(){
+            const log = getCookie('login');
+            let login_list = document.getElementsByClassName('input-none')
+            for (let i=0; i < login_list.length; i++){
+                login_list[i].value = log;
+                login_list[i].setAttribute('value', log)
+            }
+        }
+        const log = getCookie('login');
+        function get_log(){
+            return log
         }
     </script>
 </head>
@@ -31,7 +41,6 @@
             <button type="submit" onclick="send()" class="btn">Add</button>
         </div>
         <input type="text" id="login_input" name="login" class="input-none">
-        <input type="text" id="pass_input" name="password" class="input-none">
     </form>
     <br>
     <br>
@@ -40,8 +49,11 @@
     <br>
     <div class="input-container">
         <% for(var i=0; i<arr.length; i++) {%>
-        <input type="text" class="input-data" value="<%=arr[i].text %>">
-        <button class="delete btn" id="<%arr[i].text%>" onclick="delete_note()">Del</button>
+        <form method="post" action="/delete">
+            <input type="text" class="input-data" value="<%=arr[i].text %>" name="note_text">
+            <button type="submit" class="delete-btn" onclick="send_del()" name="login2">Del</button>
+            <input type="text" class="input-none" name="login1">
+        </form>
         <%} %>
     </div>
 </div>

@@ -27,23 +27,30 @@ app.get('/', function (req, res) {
     res.render('index');
 });
 
-// curl -d "login="Dima"&password="18"" -X POST 127.0.0.1:8080/auth
 app.post('/auth', (req,res) =>{
-    //console.log(req.body)
     let login = 'Dima'
     let password = '18'
     if ((req.body.login == login || 'Anya') && req.body.password == password){
-        get_data(req, res)
+        client.query("SELECT * FROM public.demo WHERE login = $1", [req.body.login], (err,q_res)=>{
+            if (!err){
+                let data = q_res.rows
+                res.render('note',{
+                    arr: data
+                });
+            }
+            else{
+                console.log(err)
+                res.send('1')
+            }
+        })
     }
     else {
         res.render('index')
     }
 })
 
-//curl -d "login="Dima"&password="18"&text="hello"" -X POST 127.0.0.1:8080/create
 app.post('/create', (req,res) =>{
     console.log(req.body.login);
-    console.log(req.body.password);
     console.log(req.body.note);
     client.query('INSERT INTO public.demo (login, text) VALUES ($1, $2)',[req.body.login, req.body.note], (err, q_res) =>{
         if (err){
@@ -66,12 +73,38 @@ app.post('/create', (req,res) =>{
             res.send('1')
         }
     })
-    //console.log(req.body)
 })
 
-app.delete('/delete')
+app.post('/delete', (req, res) =>{
+    console.log(req.body.note_text)
+    console.log('Login')
+    console.log(req.body.login1)
+    console.log(typeof req.body.note_text)
+    console.log(req.body)
+    client.query("DELETE FROM public.demo WHERE login = $1 AND text = $2", [req.body.login1, req.body.note_text], (err, q_res)=>{
+        if (!err){
 
-// app.get('/note', (req,res) =>{
+        }
+        else{
+            console.log(err)
+            res.send(err)
+        }
+    })
+    client.query("SELECT * FROM public.demo WHERE login = $1", [req.body.login1], (err,q_res)=>{
+        if (!err){
+            let data = q_res.rows
+            res.render('note',{
+                arr: data
+            });
+        }
+        else{
+            console.log(err)
+            res.send('1')
+        }
+    })
+})
+
+// function get_data(req,res) {
 //     client.query("SELECT * FROM public.demo WHERE login = $1", [req.body.login], (err,q_res)=>{
 //         if (!err){
 //             let data = q_res.rows
@@ -88,24 +121,4 @@ app.delete('/delete')
 //             res.send('1')
 //         }
 //     })
-// })
-
-
-function get_data(req,res) {
-    client.query("SELECT * FROM public.demo WHERE login = $1", [req.body.login], (err,q_res)=>{
-        if (!err){
-            let data = q_res.rows
-            //console.log(data)
-            for (let i=0; i<data.length; i++){
-                //console.log(data[i].text)
-            }
-            res.render('note',{
-                arr: data
-            });
-        }
-        else{
-            console.log(err)
-            res.send('1')
-        }
-    })
-}
+// }

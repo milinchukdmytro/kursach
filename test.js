@@ -69,24 +69,26 @@ app.post('/create', (req,res) =>{
     //console.log(req.body)
 })
 
-app.get('/note', (req,res) =>{
-    client.query("SELECT * FROM public.demo WHERE login = $1", [req.body.login], (err,q_res)=>{
-        if (!err){
-            let data = q_res.rows
-            //console.log(data)
-            for (let i=0; i<data.length; i++){
-                //console.log(data[i].text)
-            }
-            res.render('note',{
-                arr: data
-            });
-        }
-        else{
-            console.log(err)
-            res.send('1')
-        }
-    })
-})
+app.delete('/delete')
+
+// app.get('/note', (req,res) =>{
+//     client.query("SELECT * FROM public.demo WHERE login = $1", [req.body.login], (err,q_res)=>{
+//         if (!err){
+//             let data = q_res.rows
+//             //console.log(data)
+//             for (let i=0; i<data.length; i++){
+//                 //console.log(data[i].text)
+//             }
+//             res.render('note',{
+//                 arr: data
+//             });
+//         }
+//         else{
+//             console.log(err)
+//             res.send('1')
+//         }
+//     })
+// })
 
 
 function get_data(req,res) {

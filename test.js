@@ -29,6 +29,9 @@ app.get('/', function (req, res) {
 
 app.post('/auth', (req,res) =>{
     let login = 'Dima'
+    console.log(req.body.login)
+    console.log(req.body.password)
+    console.log(req.body)
     let password = '18'
     if ((req.body.login == login || 'Anya') && req.body.password == password){
         client.query("SELECT * FROM public.demo WHERE login = $1", [req.body.login], (err,q_res)=>{
@@ -103,22 +106,3 @@ app.post('/delete', (req, res) =>{
         }
     })
 })
-
-// function get_data(req,res) {
-//     client.query("SELECT * FROM public.demo WHERE login = $1", [req.body.login], (err,q_res)=>{
-//         if (!err){
-//             let data = q_res.rows
-//             //console.log(data)
-//             for (let i=0; i<data.length; i++){
-//                 //console.log(data[i].text)
-//             }
-//             res.render('note',{
-//                 arr: data
-//             });
-//         }
-//         else{
-//             console.log(err)
-//             res.send('1')
-//         }
-//     })
-// }
